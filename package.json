@@ -1,0 +1,14 @@
+{
+  "name": "canvas-api-vercel",
+  "version": "1.0.0",
+  "description": "Serverless Canvas API for WhatsApp Bot (IQC, TTQC, Windows)",
+  "type": "module",
+  "main": "api/index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node api/index.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}
