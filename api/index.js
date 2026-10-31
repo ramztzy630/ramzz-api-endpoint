@@ -1,6 +1,7 @@
 import path from 'node:path'
 import sharp from 'sharp'
 import { renderIqc, renderTtqc, renderWindows } from '../lib/canvas.js'
+import { renderTtchat, normalizeTtchatParams } from '../lib/ttchatCanvas.js'
 
 const MAX_TEXT = 300
 const MAX_IMAGE = 5 * 1024 * 1024
@@ -68,13 +69,21 @@ export const handleWindows = async (p) => ({
   warnings: []
 })
 
+export const handleTtchat = async (p) => {
+  const warnings = []
+  const avatar = await loadPhoto(p.avatar, p.avatar_base64, warnings, 'avatar')
+  return { png: await renderTtchat({ ...normalizeTtchatParams(p), avatar }), warnings }
+}
+
 const routes = {
   '/canvas/iqc': handleIqc,
   '/iqc': handleIqc,
   '/canvas/ttqc': handleTtqc,
   '/ttqc': handleTtqc,
   '/canvas/windows': handleWindows,
-  '/windows': handleWindows
+  '/windows': handleWindows,
+  '/canvas/ttchat': handleTtchat,
+  '/ttchat': handleTtchat
 }
 
 export default async function handler(req, res) {
@@ -91,7 +100,7 @@ export default async function handler(req, res) {
       return sendJson(res, 200, {
         status: true,
         message: 'Canvas API Serverless (Vercel) Online!',
-        endpoints: ['/canvas/iqc', '/canvas/ttqc', '/canvas/windows']
+        endpoints: ['/canvas/iqc', '/canvas/ttqc', '/canvas/windows', '/canvas/ttchat']
       })
     }
 
