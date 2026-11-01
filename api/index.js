@@ -3,6 +3,7 @@ import sharp from 'sharp'
 import { renderIqc, renderTtqc, renderWindows } from '../lib/canvas.js'
 import { renderTtchat, normalizeTtchatParams } from '../lib/ttchatCanvas.js'
 import { renderIqc2, normalizeIqc2Params } from '../lib/iqc2Canvas.js'
+import { renderFakeml, normalizeFakemlParams } from '../lib/fakemlCanvas.js'
 
 const MAX_TEXT = 300
 const MAX_IMAGE = 5 * 1024 * 1024
@@ -82,6 +83,13 @@ export const handleIqc2 = async (p) => {
   return { png: await renderIqc2({ ...normalizeIqc2Params(p), image, warnings }), warnings }
 }
 
+export const handleFakeml = async (p) => {
+  const warnings = []
+  const avatar = await loadPhoto(p.avatar, p.avatar_base64, warnings, 'avatar')
+  const border = await loadPhoto(p.border, p.border_base64, warnings, 'border')
+  return { png: await renderFakeml({ ...normalizeFakemlParams(p), avatar, border, warnings }), warnings }
+}
+
 const routes = {
   '/canvas/iqc': handleIqc,
   '/iqc': handleIqc,
@@ -92,7 +100,9 @@ const routes = {
   '/canvas/ttchat': handleTtchat,
   '/ttchat': handleTtchat,
   '/canvas/iqc2': handleIqc2,
-  '/iqc2': handleIqc2
+  '/iqc2': handleIqc2,
+  '/canvas/fakeml': handleFakeml,
+  '/fakeml': handleFakeml
 }
 
 export default async function handler(req, res) {
@@ -109,7 +119,7 @@ export default async function handler(req, res) {
       return sendJson(res, 200, {
         status: true,
         message: 'Canvas API Serverless (Vercel) Online!',
-        endpoints: ['/canvas/iqc', '/canvas/iqc2', '/canvas/ttqc', '/canvas/windows', '/canvas/ttchat']
+        endpoints: ['/canvas/iqc', '/canvas/iqc2', '/canvas/fakeml', '/canvas/ttqc', '/canvas/windows', '/canvas/ttchat']
       })
     }
 
