@@ -79,7 +79,7 @@ export const handleTtchat = async (p) => {
 export const handleIqc2 = async (p) => {
   const warnings = []
   const image = await loadPhoto(p.image, p.image_base64, warnings, 'image')
-  return { png: await renderIqc2({ ...normalizeIqc2Params(p), image }), warnings }
+  return { png: await renderIqc2({ ...normalizeIqc2Params(p), image, warnings }), warnings }
 }
 
 const routes = {
