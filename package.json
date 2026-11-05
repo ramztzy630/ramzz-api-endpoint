@@ -1,25 +1,12 @@
 {
-  "name": "XenaMorph",
+  "name": "ramzz-api-endpoint",
   "version": "1.0.0",
-  "description": "Base bot WhatsApp sederhana (Baileys)",
+  "private": true,
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "engines": {
-    "node": ">=20"
+    "node": "22.x"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "latest",
-    "axios": "^1.7.0",
-    "axios-cookiejar-support": "^5.0.0",
-    "cheerio": "^1.0.0",
-    "got-scraping": "^4.0.0",
-    "pino": "^9.0.0",
-    "sharp": "^0.34.0",
-    "tough-cookie": "^5.0.0",
-    "twemoji-parser": "^14.0.0",
-    "wa-sticker-formatter": "^4.4.4"
+    "sharp": "^0.34.0"
   }
 }
